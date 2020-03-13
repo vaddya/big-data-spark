@@ -1,8 +1,8 @@
 package com.vaddya.bigdata
 
-import org.apache.spark.ml.classification._
+import org.apache.spark.ml.classification.{ClassificationModel, Classifier, LogisticRegression, RandomForestClassifier}
 import org.apache.spark.ml.evaluation.BinaryClassificationEvaluator
-import org.apache.spark.ml.feature._
+import org.apache.spark.ml.feature.{ChiSqSelector, ChiSqSelectorModel, StandardScaler, VectorAssembler}
 import org.apache.spark.ml.tuning.{CrossValidator, ParamGridBuilder}
 import org.apache.spark.ml.{Pipeline, PipelineModel, Transformer}
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
