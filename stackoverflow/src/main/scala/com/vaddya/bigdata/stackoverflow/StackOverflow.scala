@@ -145,7 +145,7 @@ class StackOverflow extends StackOverflowInterface with Serializable {
     val res =
       if (langSpread < 500)
       // sample the space regardless of the language
-      vectors.takeSample(false, kmeansKernels, 42)
+      vectors.takeSample(withReplacement = false, kmeansKernels, 42)
       else
       // sample the space uniformly from each language partition
       vectors.groupByKey.flatMap({
@@ -301,6 +301,6 @@ class StackOverflow extends StackOverflowInterface with Serializable {
     println("  Score  Dominant language (%percent)  Questions")
     println("================================================")
     for ((lang, percent, size, score) <- results)
-      println(f"${score}%7d  ${lang}%-17s (${percent}%-5.1f%%)      ${size}%7d")
+      println(f"$score%7d  $lang%-17s ($percent%-5.1f%%)      $size%7d")
   }
 }
