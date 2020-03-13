@@ -1,13 +1,13 @@
 # Binary Classification
 
-## Data
-https://cloud.mail.ru/public/2QH4/2z3HFmvfs
-
 ## Task
 Написать на Spark ML пайплайн который должен включать следующие стадии:
 1. Подбор гипер параметров алгоритма
 2. Отбор значимых признаков
 3. Сравнение двух алгоритмов по качеству работы (метрика качества AUC)
+
+## Data
+https://cloud.mail.ru/public/2QH4/2z3HFmvfs
 
 ## Output
 ```
