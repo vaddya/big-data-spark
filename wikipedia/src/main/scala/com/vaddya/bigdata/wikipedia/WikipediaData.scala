@@ -3,7 +3,6 @@ package com.vaddya.bigdata.wikipedia
 import scala.io.Source
 
 object WikipediaData {
-
   def lines: List[String] = {
     Option(getClass.getResourceAsStream("/wikipedia.dat")) match {
       case None => sys.error("Please download the dataset as explained in the assignment instructions")

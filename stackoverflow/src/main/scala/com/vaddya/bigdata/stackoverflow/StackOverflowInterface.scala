@@ -5,12 +5,14 @@ import org.apache.spark.rdd.RDD
 object StackOverflowInterface {
 
   /** A raw stackoverflow posting, either a question or an answer */
-  case class Posting(postingType: Int,
-                     id: Int,
-                     acceptedAnswer: Option[Int],
-                     parentId: Option[QID],
-                     score: Int,
-                     tags: Option[String]) extends Serializable
+  case class Posting(
+    postingType: Int,
+    id: Int,
+    acceptedAnswer: Option[Int],
+    parentId: Option[QID],
+    score: Int,
+    tags: Option[String]
+  ) extends Serializable
 
   type Question = Posting
   type Answer = Posting
@@ -25,7 +27,7 @@ object StackOverflowInterface {
  */
 trait StackOverflowInterface {
   import StackOverflowInterface._
-  
+
   def clusterResults(means: Array[(Int, Int)], vectors: RDD[(LangIndex, HighScore)]): Array[(String, Double, Int, Int)]
   def groupedPostings(postings: RDD[Posting]): RDD[(QID, Iterable[(Question, Answer)])]
   def kmeans(means: Array[(Int, Int)], vectors: RDD[(Int, Int)], iter: Int = 1, debug: Boolean = false): Array[(Int, Int)]

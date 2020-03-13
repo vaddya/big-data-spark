@@ -1,7 +1,7 @@
 package com.vaddya.bigdata.wikipedia
 
-import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.rdd.RDD
+import org.apache.spark.{SparkConf, SparkContext}
 
 case class WikipediaArticle(title: String, text: String) {
   /**
@@ -20,9 +20,11 @@ object WikipediaRanking extends WikipediaRankingInterface {
   val conf: SparkConf = new SparkConf()
     .setAppName("Wikipedia")
     .setMaster("local[*]")
+
   val sc: SparkContext = new SparkContext(conf)
-  // Hint: use a combination of `sc.parallelize`, `WikipediaData.lines` and `WikipediaData.parse`
-  val wikiRdd: RDD[WikipediaArticle] = sc.parallelize(WikipediaData.lines)
+
+  val wikiRdd: RDD[WikipediaArticle] = sc
+    .parallelize(WikipediaData.lines)
     .map(WikipediaData.parse)
 
   /** Returns the number of articles on which the language `lang` occurs.

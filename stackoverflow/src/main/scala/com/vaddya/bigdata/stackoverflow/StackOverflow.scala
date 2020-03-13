@@ -53,7 +53,6 @@ class StackOverflow extends StackOverflowInterface with Serializable {
   /** K-means parameter: Maximum iterations */
   def kmeansMaxIterations = 120
 
-
   //
   //
   // Parsing utilities:
@@ -64,14 +63,14 @@ class StackOverflow extends StackOverflowInterface with Serializable {
   def rawPostings(lines: RDD[String]): RDD[Posting] =
     lines.map(line => {
       val arr = line.split(",")
-      Posting(postingType = arr(0).toInt,
+      Posting(
+        postingType = arr(0).toInt,
         id = arr(1).toInt,
         acceptedAnswer = if (arr(2) == "") None else Some(arr(2).toInt),
         parentId = if (arr(3) == "") None else Some(arr(3).toInt),
         score = arr(4).toInt,
         tags = if (arr.length >= 6) Some(arr(5).intern()) else None)
     })
-
 
   /** Group the questions and answers together */
   def groupedPostings(postings: RDD[Posting]): RDD[(QID, Iterable[(Question, Answer)])] = {
@@ -82,7 +81,6 @@ class StackOverflow extends StackOverflowInterface with Serializable {
     questions.join(answers)
       .groupByKey()
   }
-
 
   /** Compute the maximum score for each posting */
   def scoredPostings(grouped: RDD[(QID, Iterable[(Question, Answer)])]): RDD[(Question, HighScore)] = {
@@ -101,7 +99,6 @@ class StackOverflow extends StackOverflowInterface with Serializable {
     grouped.map { case (_, answers) => (answers.head._1, answerHighScore(answers.map(_._2).toArray)) }
   }
 
-
   /** Compute the vectors for the kmeans */
   def vectorPostings(scored: RDD[(Question, HighScore)]): RDD[(LangIndex, HighScore)] = {
     /** Return optional index of first language that occurs in `tags`. */
@@ -117,7 +114,6 @@ class StackOverflow extends StackOverflowInterface with Serializable {
       }
     }
   }
-
 
   /** Sample the vectors */
   def sampleVectors(vectors: RDD[(LangIndex, HighScore)]): Array[(Int, Int)] = {
@@ -160,7 +156,6 @@ class StackOverflow extends StackOverflowInterface with Serializable {
     res
   }
 
-
   //
   //
   //  Kmeans method:
@@ -168,7 +163,12 @@ class StackOverflow extends StackOverflowInterface with Serializable {
   //
 
   /** Main kmeans computation */
-  @tailrec final def kmeans(means: Array[(Int, Int)], vectors: RDD[(Int, Int)], iter: Int = 1, debug: Boolean = false): Array[(Int, Int)] = {
+  @tailrec final def kmeans(
+    means: Array[(Int, Int)],
+    vectors: RDD[(Int, Int)],
+    iter: Int = 1,
+    debug: Boolean = false
+  ): Array[(Int, Int)] = {
     val newMeans = means.clone() // you need to compute newMeans
     vectors
       .map(v => (findClosest(v, means), v))
@@ -187,7 +187,7 @@ class StackOverflow extends StackOverflowInterface with Serializable {
            |  * means:""".stripMargin)
       for (idx <- 0 until kmeansKernels)
         println(f"   ${means(idx).toString}%20s ==> ${newMeans(idx).toString}%20s  " +
-          f"  distance: ${euclideanDistance(means(idx), newMeans(idx))}%8.0f")
+                  f"  distance: ${euclideanDistance(means(idx), newMeans(idx))}%8.0f")
     }
 
     if (converged(distance))
@@ -201,7 +201,6 @@ class StackOverflow extends StackOverflowInterface with Serializable {
       newMeans
     }
   }
-
 
   //
   //
@@ -246,7 +245,6 @@ class StackOverflow extends StackOverflowInterface with Serializable {
     bestIndex
   }
 
-
   /** Average the vectors */
   def averageVectors(ps: Iterable[(Int, Int)]): (Int, Int) = {
     val iter = ps.iterator
@@ -261,7 +259,6 @@ class StackOverflow extends StackOverflowInterface with Serializable {
     }
     ((comp1 / count).toInt, (comp2 / count).toInt)
   }
-
 
   //
   //
