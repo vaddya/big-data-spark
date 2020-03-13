@@ -1,4 +1,4 @@
-# User Agents Analytics
+# User Agents
 
 ## Task
 1. Взять все UA, для которых было больше 5 показов рекламы, посчитать CTR (clicks / shows) для каждого UA и вывести топ 5.

@@ -10,12 +10,14 @@ lazy val global = project
   .aggregate(
     useragents,
     binclass,
-    titanic
+    titanic,
+    wikipedia
   )
 
 lazy val useragents = sparkProject("useragents")
 lazy val binclass = sparkProject("binclass")
 lazy val titanic = sparkProject("titanic")
+lazy val wikipedia = sparkProject("wikipedia")
 
 def sparkProject(dir: String) = Project(dir, file(dir))
   .settings(
