@@ -1,4 +1,4 @@
-package com.vaddya.bigdata
+package com.vaddya.bigdata.useragents
 
 import org.apache.spark.sql.expressions.Window.orderBy
 import org.apache.spark.sql.functions._

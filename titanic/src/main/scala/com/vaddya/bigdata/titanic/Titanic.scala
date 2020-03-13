@@ -1,4 +1,4 @@
-package com.vaddya.bigdata
+package com.vaddya.bigdata.titanic
 
 import org.apache.spark.ml.classification.{RandomForestClassificationModel, RandomForestClassifier}
 import org.apache.spark.ml.evaluation.BinaryClassificationEvaluator

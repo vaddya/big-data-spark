@@ -1,4 +1,4 @@
-package com.vaddya.bigdata
+package com.vaddya.bigdata.binclass
 
 import org.apache.spark.ml.classification.{ClassificationModel, Classifier, LogisticRegression, RandomForestClassifier}
 import org.apache.spark.ml.evaluation.BinaryClassificationEvaluator
