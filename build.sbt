@@ -11,13 +11,15 @@ lazy val global = project
     useragents,
     binclass,
     titanic,
-    wikipedia
+    wikipedia,
+    stackoverflow
   )
 
 lazy val useragents = sparkProject("useragents")
 lazy val binclass = sparkProject("binclass")
 lazy val titanic = sparkProject("titanic")
 lazy val wikipedia = sparkProject("wikipedia")
+lazy val stackoverflow = sparkProject("stackoverflow")
 
 def sparkProject(dir: String) = Project(dir, file(dir))
   .settings(
